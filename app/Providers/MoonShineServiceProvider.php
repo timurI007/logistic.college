@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use MoonShine\Providers\MoonShineApplicationServiceProvider;
-use MoonShine\MoonShine;
 use MoonShine\Menu\MenuGroup;
 use MoonShine\Menu\MenuItem;
-use App\MoonShine\Resources\MoonShineUserResource;
-use App\MoonShine\Resources\MoonShineUserRoleResource;
+use App\MoonShine\Resources\RoleResource;
+use App\MoonShine\Resources\UserResource;
 use MoonShine\Contracts\Resources\ResourceContract;
 use MoonShine\Menu\MenuElement;
 use MoonShine\Pages\Page;
@@ -42,11 +41,11 @@ class MoonShineServiceProvider extends MoonShineApplicationServiceProvider
             MenuGroup::make(static fn() => __('moonshine::ui.resource.system'), [
                 MenuItem::make(
                     static fn() => __('moonshine::ui.resource.admins_title'),
-                    new MoonShineUserResource()
+                    new UserResource()
                 ),
                 MenuItem::make(
                     static fn() => __('moonshine::ui.resource.role_title'),
-                    new MoonShineUserRoleResource()
+                    new RoleResource()
                 ),
             ])
         ];

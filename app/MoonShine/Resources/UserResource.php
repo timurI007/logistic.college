@@ -4,40 +4,48 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Resources;
 
-use Illuminate\Validation\Rule;
-use MoonShine\Attributes\Icon;
+use App\Models\Role;
+use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
+
+use MoonShine\Resources\ModelResource;
 use MoonShine\Decorations\Block;
+use MoonShine\Fields\ID;
+use MoonShine\Fields\Field;
+use MoonShine\Components\MoonShineComponent;
+use Illuminate\Validation\Rule;
 use MoonShine\Decorations\Heading;
 use MoonShine\Decorations\Tab;
 use MoonShine\Decorations\Tabs;
 use MoonShine\Fields\Date;
 use MoonShine\Fields\Email;
-use MoonShine\Fields\ID;
 use MoonShine\Fields\Image;
 use MoonShine\Fields\Password;
 use MoonShine\Fields\PasswordRepeat;
 use MoonShine\Fields\Relationships\BelongsTo;
 use MoonShine\Fields\Text;
-use MoonShine\Models\MoonshineUser;
-use MoonShine\Resources\ModelResource;
-use MoonShine\Models\MoonshineUserRole;
 
-#[Icon('heroicons.outline.users')]
-class MoonShineUserResource extends ModelResource
+/**
+ * @extends ModelResource<User>
+ */
+class UserResource extends ModelResource
 {
-    public string $model = MoonshineUser::class;
+    protected string $model = User::class;
 
     public string $column = 'name';
 
     protected bool $columnSelection = true;
 
-    public array $with = ['moonshineUserRole'];
+    public array $with = ['role'];
 
     public function title(): string
     {
         return __('moonshine::ui.resource.admins_title');
     }
 
+    /**
+     * @return list<MoonShineComponent|Field>
+     */
     public function fields(): array
     {
         return [
@@ -50,9 +58,9 @@ class MoonShineUserResource extends ModelResource
 
                         BelongsTo::make(
                             __('moonshine::ui.resource.role'),
-                            'moonshineUserRole',
-                            static fn (MoonshineUserRole $model) => $model->name,
-                            new MoonShineUserRoleResource(),
+                            'role',
+                            static fn (Role $model) => $model->name,
+                            new RoleResource(),
                         )->badge('purple'),
 
                         Text::make(__('moonshine::ui.resource.name'), 'name')
@@ -99,9 +107,12 @@ class MoonShineUserResource extends ModelResource
     }
 
     /**
-     * @return array{name: string, moonshine_user_role_id: string, email: mixed[], password: string}
+     * @param User $item
+     *
+     * @return array<string, string[]|string>
+     * @see https://laravel.com/docs/validation#available-validation-rules
      */
-    public function rules($item): array
+    public function rules(Model $item): array
     {
         return [
             'name' => 'required',

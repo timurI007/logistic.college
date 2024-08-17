@@ -4,17 +4,22 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Resources;
 
-use MoonShine\Attributes\Icon;
+use Illuminate\Database\Eloquent\Model;
+use App\Models\Role;
+
+use MoonShine\Resources\ModelResource;
 use MoonShine\Decorations\Block;
 use MoonShine\Fields\ID;
+use MoonShine\Fields\Field;
+use MoonShine\Components\MoonShineComponent;
 use MoonShine\Fields\Text;
-use MoonShine\Models\MoonshineUserRole;
-use MoonShine\Resources\ModelResource;
 
-#[Icon('heroicons.outline.bookmark')]
-class MoonShineUserRoleResource extends ModelResource
+/**
+ * @extends ModelResource<Role>
+ */
+class RoleResource extends ModelResource
 {
-    public string $model = MoonshineUserRole::class;
+    protected string $model = Role::class;
 
     public string $column = 'name';
 
@@ -29,6 +34,9 @@ class MoonShineUserRoleResource extends ModelResource
         return __('moonshine::ui.resource.role');
     }
 
+    /**
+     * @return list<MoonShineComponent|Field>
+     */
     public function fields(): array
     {
         return [
@@ -42,9 +50,12 @@ class MoonShineUserRoleResource extends ModelResource
     }
 
     /**
-     * @return array{name: string}
+     * @param Role $item
+     *
+     * @return array<string, string[]|string>
+     * @see https://laravel.com/docs/validation#available-validation-rules
      */
-    public function rules($item): array
+    public function rules(Model $item): array
     {
         return [
             'name' => 'required|min:5',

@@ -1,10 +1,10 @@
 <?php
 
+use App\Models\User;
 use MoonShine\Exceptions\MoonShineNotFoundException;
 use App\MoonShine\Forms\LoginForm;
 use MoonShine\Http\Middleware\Authenticate;
 use MoonShine\Http\Middleware\SecurityHeadersMiddleware;
-use MoonShine\Models\MoonshineUser;
 use App\MoonShine\MoonShineLayout;
 use App\MoonShine\Pages\ProfilePage;
 
@@ -27,7 +27,7 @@ return [
         'notFoundHandler' => MoonShineNotFoundException::class,
     ],
 
-    'use_migrations' => true,
+    'use_migrations' => false,
     'use_notifications' => true,
     'use_theme_switcher' => true,
 
@@ -85,7 +85,7 @@ return [
         'providers' => [
             'moonshine' => [
                 'driver' => 'eloquent',
-                'model' => MoonshineUser::class,
+                'model' => User::class,
             ],
         ],
         'pipelines' => [],

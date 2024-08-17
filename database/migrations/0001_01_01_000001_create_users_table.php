@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Role;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,8 +14,16 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+
+            $table->foreignId('role_id')
+                ->default(Role::DEFAULT_ROLE_ID)
+                ->constrained()
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
+            
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('avatar')->nullable();
+            $table->string('email', 190)->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
