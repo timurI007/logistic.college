@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use MoonShine\Providers\MoonShineApplicationServiceProvider;
-use MoonShine\Menu\MenuGroup;
 use MoonShine\Menu\MenuItem;
-use App\MoonShine\Resources\RoleResource;
 use App\MoonShine\Resources\UserResource;
 use MoonShine\Contracts\Resources\ResourceContract;
 use MoonShine\Menu\MenuElement;
 use MoonShine\Pages\Page;
+use MoonShine\Menu\MenuDivider;
 use Closure;
 
 class MoonShineServiceProvider extends MoonShineApplicationServiceProvider
@@ -38,16 +37,51 @@ class MoonShineServiceProvider extends MoonShineApplicationServiceProvider
     protected function menu(): array
     {
         return [
-            MenuGroup::make(static fn() => __('moonshine::ui.resource.system'), [
-                MenuItem::make(
-                    static fn() => __('moonshine::ui.resource.admins_title'),
-                    new UserResource()
-                ),
-                MenuItem::make(
-                    static fn() => __('moonshine::ui.resource.role_title'),
-                    new RoleResource()
-                ),
-            ])
+            MenuItem::make(
+                static fn() => __('moonshine::ui.dashboard'),
+                fn () => route('moonshine.index')
+            )->icon('heroicons.outline.squares-2x2'),
+
+            MenuDivider::make(static fn() => __('moonshine::ui.main')),
+
+            MenuItem::make(
+                static fn() => __('moonshine::ui.courses'),
+                new UserResource()
+            )->icon('heroicons.outline.book-open'),
+            MenuItem::make(
+                static fn() => __('moonshine::ui.homework'),
+                new UserResource()
+            )->icon('heroicons.outline.clipboard-document-check'),
+
+            MenuDivider::make(static fn() => __('moonshine::ui.educational_resources')),
+
+            MenuItem::make(
+                static fn() => __('moonshine::ui.tests'),
+                new UserResource()
+            )->icon('heroicons.outline.document-text'),
+            MenuItem::make(
+                static fn() => __('moonshine::ui.materials'),
+                new UserResource()
+            )->icon('heroicons.outline.bookmark'),
+            MenuItem::make(
+                static fn() => __('moonshine::ui.dictionary'),
+                new UserResource()
+            )->icon('heroicons.outline.list-bullet'),
+
+            MenuDivider::make(static fn() => __('moonshine::ui.interaction')),
+
+            MenuItem::make(
+                static fn() => __('moonshine::ui.events'),
+                new UserResource()
+            )->icon('heroicons.outline.rocket-launch'),
+            MenuItem::make(
+                static fn() => __('moonshine::ui.forums'),
+                new UserResource()
+            )->icon('heroicons.outline.chat-bubble-left-right'),
+            MenuItem::make(
+                static fn() => __('moonshine::ui.support'),
+                new UserResource()
+            )->icon('heroicons.outline.question-mark-circle'),
         ];
     }
 

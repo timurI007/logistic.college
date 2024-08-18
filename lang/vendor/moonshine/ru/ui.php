@@ -2,7 +2,7 @@
 
 return [
     'profile' => 'Профиль',
-    'dashboard' => 'Панель',
+    'dashboard' => 'Главная',
     'add' => 'Добавить',
     'create' => 'Создать',
     'edit' => 'Редактировать',
@@ -91,5 +91,16 @@ return [
         'add_item' => 'Нажмите Enter для добавления «:value»',
         'max_item' => 'Максимальное количество элементов: :count',
         'remove_item' => 'Удалить элемент',
-    ]
+    ],
+    'courses' => 'Курсы',
+    'homework' => 'Домашние Задания',
+    'tests' => 'Тесты',
+    'dictionary' => 'Словарь',
+    'materials' => 'Материалы',
+    'events' => 'События',
+    'support' => 'Поддержка',
+    'forums' => 'Форумы',
+    'main' => 'Основное',
+    'educational_resources' => 'Учебные Ресурсы',
+    'interaction' => 'Взаимодействие'
 ];
