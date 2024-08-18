@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\MoonShine\Pages\Courses\CoursesPage;
 use MoonShine\Providers\MoonShineApplicationServiceProvider;
 use MoonShine\Menu\MenuItem;
 use App\MoonShine\Resources\UserResource;
@@ -46,7 +47,7 @@ class MoonShineServiceProvider extends MoonShineApplicationServiceProvider
 
             MenuItem::make(
                 static fn() => __('moonshine::ui.courses'),
-                new UserResource()
+                new CoursesPage()
             )->icon('heroicons.outline.book-open'),
             MenuItem::make(
                 static fn() => __('moonshine::ui.homework'),
