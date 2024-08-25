@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
+use Spatie\Translatable\HasTranslations;
 
 class Chapter extends Model
 {
-    use HasFactory;
+    use HasFactory, HasTranslations;
 
-    protected $fillable = [
-        'course_id',
-        'parent_id',
+    public $translatable = [
         'title',
         'subtitle'
     ];
@@ -25,7 +25,21 @@ class Chapter extends Model
 
     public function parent(): BelongsTo
     {
-        return $this->belongsTo(Chapter::class, 'parent_id');
+        return $this->belongsTo(Chapter::class, 'parent_id')->select(['id', 'title', 'parent_id']);
+    }
+    
+    public function parents()
+    {
+        $parents = collect();
+
+        $parent = $this->parent;
+
+        while ($parent) {
+            $parents->prepend($parent);
+            $parent = $parent->parent;
+        }
+
+        return $parents;
     }
 
     public function children(): HasMany

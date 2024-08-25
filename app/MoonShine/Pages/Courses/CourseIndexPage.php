@@ -4,19 +4,23 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Pages\Courses;
 
-use App\Models\Course;
+use Illuminate\Database\Eloquent\Collection;
 use MoonShine\Components\Card;
 use MoonShine\Pages\Page;
 use MoonShine\Components\MoonShineComponent;
 use MoonShine\Decorations\Column;
 use MoonShine\Decorations\Grid;
-use MoonShine\Fields\Text;
 
-class CoursesPage extends Page
+class CourseIndexPage extends Page
 {
-    /**
-     * @return array<string, string>
-     */
+    protected Collection $courses;
+
+    public function setCourses(Collection $courses): self
+    {
+        $this->courses = $courses;
+        return $this;
+    }
+
     public function breadcrumbs(): array
     {
         return [
@@ -26,7 +30,12 @@ class CoursesPage extends Page
 
     public function title(): string
     {
-        return $this->title ?: 'CoursesPage';
+        return __('moonshine::ui.courses');
+    }
+
+    public function subtitle(): string
+    {
+        return __('moonshine::ui.courses_subtitle');
     }
 
     /**
@@ -34,18 +43,16 @@ class CoursesPage extends Page
      */
     public function components(): array
 	{
-        $courses = Course::select('id', 'title', 'subtitle')->get();
         $columns = [];
-        foreach ($courses as $course) {
+        foreach ($this->courses as $course) {
             $columns[] = Column::make([
                 Card::make(
                     title: $course->title,
                     thumbnail: '/images/image_1.jpg',
-                    url: fn() => 'https://cutcode.dev',
-                    subtitle: date('d.m.Y')
+                    url: fn() => route('courses.detail', ['slug' => $course->slug]),
+                    subtitle: $course->subtitle
                 )
-            ])
-                ->columnSpan(4);
+            ])->columnSpan(4);
         }
 		return [
             Grid::make($columns)

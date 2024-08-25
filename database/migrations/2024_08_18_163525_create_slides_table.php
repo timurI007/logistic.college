@@ -19,7 +19,7 @@ return new class extends Migration
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
             
-            $table->text('content')->nullable();
+            $table->longText('content')->nullable();
             $table->integer('order')->default(0);
             $table->timestamps();
         });

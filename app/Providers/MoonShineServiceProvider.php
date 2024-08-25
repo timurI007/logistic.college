@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\MoonShine\Pages\Courses\CoursesPage;
 use MoonShine\Providers\MoonShineApplicationServiceProvider;
 use MoonShine\Menu\MenuItem;
 use App\MoonShine\Resources\UserResource;
@@ -47,7 +46,7 @@ class MoonShineServiceProvider extends MoonShineApplicationServiceProvider
 
             MenuItem::make(
                 static fn() => __('moonshine::ui.courses'),
-                new CoursesPage()
+                fn() => route('courses.index')
             )->icon('heroicons.outline.book-open'),
             MenuItem::make(
                 static fn() => __('moonshine::ui.homework'),
@@ -71,6 +70,11 @@ class MoonShineServiceProvider extends MoonShineApplicationServiceProvider
 
             MenuDivider::make(static fn() => __('moonshine::ui.interaction')),
 
+            
+            MenuItem::make(
+                static fn() => __('moonshine::ui.payment'),
+                new UserResource()
+            )->icon('heroicons.outline.credit-card'),
             MenuItem::make(
                 static fn() => __('moonshine::ui.events'),
                 new UserResource()

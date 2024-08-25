@@ -91,9 +91,9 @@ return [
         'pipelines' => [],
     ],
     'locales' => [
-        'en',
         'ru',
         'uz',
+        'en',
     ],
 
     'global_search' => [
