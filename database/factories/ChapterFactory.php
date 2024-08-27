@@ -20,8 +20,8 @@ class ChapterFactory extends Factory
         return [
             'course_id' => Course::factory(),
             'parent_id' => null,
-            'title' => $this->faker->sentence,
-            'subtitle' => $this->faker->sentence,
+            'title' => fake()->sentence,
+            'subtitle' => fake()->sentence,
         ];
     }
 }
