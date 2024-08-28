@@ -4,28 +4,20 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Controllers;
 
-use App\Models\Chapter;
-use App\Models\Course;
-use App\Models\Presentation;
+use App\MoonShine\Controllers\BaseControllers\BaseCourseController;
 use App\MoonShine\Pages\Courses\Presentations\PresentationDetailPage;
-use MoonShine\Http\Controllers\MoonShineController;
 use MoonShine\Pages\Page;
 
-final class PresentationController extends MoonShineController
+final class PresentationController extends BaseCourseController
 {
     public function detail(string $courseSlug, int $chapterId, int $presentationId): Page
     {
-        $course = Course::select('id', 'slug', 'title')
-            ->where('slug', $courseSlug)
-            ->firstOrFail();
-        $chapter = Chapter::select('id', 'title', 'subtitle', 'parent_id')
-            ->where('id', $chapterId)
-            ->where('course_id', $course->id)
-            ->firstOrFail();
-        $presentation = Presentation::select('id')
-            ->where('id', $presentationId)
-            ->where('chapter_id', $chapter->id)
-            ->firstOrFail();
-        return PresentationDetailPage::make();
+        $course = $this->getCourseBySlug($courseSlug, ['id', 'slug', 'title']);
+        $chapter = $this->getChapterByIdAndCourseId($chapterId, $course->id, ['id', 'title', 'subtitle', 'parent_id']);
+        $presentation = $this->getPresentationByIdAndChapterId($presentationId, $chapter->id, ['id', 'title']);
+        return PresentationDetailPage::make()
+            ->setCourse($course)
+            ->setChapter($chapter)
+            ->setPresentation($presentation);
     }
 }

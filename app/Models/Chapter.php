@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Collection;
 use Spatie\Translatable\HasTranslations;
 
 class Chapter extends Model
@@ -28,7 +27,7 @@ class Chapter extends Model
         return $this->belongsTo(Chapter::class, 'parent_id')->select(['id', 'title', 'parent_id']);
     }
     
-    public function parents()
+    public function parents(array $fields = ['*'])
     {
         $parents = collect();
 
@@ -36,7 +35,7 @@ class Chapter extends Model
 
         while ($parent) {
             $parents->prepend($parent);
-            $parent = $parent->parent;
+            $parent = $parent->parent()->select($fields)->get();
         }
 
         return $parents;

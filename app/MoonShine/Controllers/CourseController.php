@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\MoonShine\Controllers;
 
 use App\Models\Course;
+use App\MoonShine\Controllers\BaseControllers\BaseCourseController;
 use App\MoonShine\Pages\Courses\CourseIndexPage;
 use App\MoonShine\Pages\Courses\CourseDetailPage;
-use MoonShine\Http\Controllers\MoonShineController;
 use MoonShine\Pages\Page;
 
-final class CourseController extends MoonShineController
+final class CourseController extends BaseCourseController
 {
     public function index(): Page
     {

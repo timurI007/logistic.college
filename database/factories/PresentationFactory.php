@@ -19,6 +19,11 @@ class PresentationFactory extends Factory
     {
         return [
             'chapter_id' => Chapter::factory(),
+            'title' => [
+                'ru' => fake()->sentence,
+                'uz' => fake()->sentence,
+                'en' => fake()->sentence,
+            ],
         ];
     }
 }

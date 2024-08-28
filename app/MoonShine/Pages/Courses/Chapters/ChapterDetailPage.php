@@ -72,7 +72,7 @@ class ChapterDetailPage extends Page
     public function components(): array
 	{
         $children = $this->chapter->children()->select('id', 'title', 'subtitle')->get();
-        $presentations = $this->chapter->presentations()->select('id')->get();
+        $presentations = $this->chapter->presentations()->select('id', 'title')->get();
         $presentationLinks = [];
         $chapterColumns = [];
 
@@ -85,12 +85,11 @@ class ChapterDetailPage extends Page
                     'chapterId' => $this->chapter->id,
                     'presentationId' => $presentation->id
                 ]);
-                $presentationLinks[] = Link::make($url, __('moonshine::ui.presentation_number', [
-                    'number' => $number
-                ]))
+                $presentationLinks[] = Link::make($url, $presentation->title)
                     ->icon('heroicons.outline.presentation-chart-bar')
                     ->button()
-                    ->filled();
+                    ->filled()
+                    ->badge('#' . $number);
                 $number++;
             }
         }

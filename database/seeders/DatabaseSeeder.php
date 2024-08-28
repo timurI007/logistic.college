@@ -19,11 +19,7 @@ class DatabaseSeeder extends Seeder
         Course::factory(5)->create()->each(function ($course) {
             $chapters = Chapter::factory(12)->create(['course_id' => $course->id]);
 
-            $chapters->each(function ($chapter) use ($course) {
-                Chapter::factory(2)->create([
-                    'course_id' => $course->id,
-                    'parent_id' => $chapter->id,
-                ]);
+            $chapters->each(function ($chapter) {
 
                 $presentations = Presentation::factory()->count(2)->create(['chapter_id' => $chapter->id]);
                 

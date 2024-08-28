@@ -105,6 +105,5 @@ return [
     'main' => 'Основное',
     'educational_resources' => 'Учебные Ресурсы',
     'interaction' => 'Взаимодействие',
-    'presentations' => 'Презентации',
-    'presentation_number' => 'Презентация #:number'
+    'presentations' => 'Презентации'
 ];
