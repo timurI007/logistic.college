@@ -15,9 +15,6 @@ final class PresentationController extends BaseCourseController
         $course = $this->getCourseBySlug($courseSlug, ['id', 'slug', 'title']);
         $chapter = $this->getChapterByIdAndCourseId($chapterId, $course->id, ['id', 'title', 'subtitle', 'parent_id']);
         $presentation = $this->getPresentationByIdAndChapterId($presentationId, $chapter->id, ['id', 'title']);
-        return PresentationDetailPage::make()
-            ->setCourse($course)
-            ->setChapter($chapter)
-            ->setPresentation($presentation);
+        return PresentationDetailPage::make($course, $chapter, $presentation);
     }
 }

@@ -11,14 +11,17 @@ use MoonShine\Components\MoonShineComponent;
 use MoonShine\Decorations\Column;
 use MoonShine\Decorations\Grid;
 
+/**
+ * @method static static make(Course $course)
+ */
 class CourseDetailPage extends Page
 {
     private Course $course;
 
-    public function setCourse(Course $course): self
+    public function __construct(Course $course)
     {
         $this->course = $course;
-        return $this;
+        parent::__construct();
     }
     
     public function breadcrumbs(): array

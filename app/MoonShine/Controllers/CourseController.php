@@ -15,7 +15,7 @@ final class CourseController extends BaseCourseController
     public function index(): Page
     {
         $courses = Course::select('title', 'subtitle', 'slug', 'image')->get();
-        return CourseIndexPage::make()->setCourses($courses);
+        return CourseIndexPage::make($courses);
     }
 
     public function detail(string $slug): Page
@@ -27,6 +27,6 @@ final class CourseController extends BaseCourseController
             }])
             ->where('slug', $slug)
             ->firstOrFail();
-        return CourseDetailPage::make()->setCourse($course);
+        return CourseDetailPage::make($course);
     }
 }

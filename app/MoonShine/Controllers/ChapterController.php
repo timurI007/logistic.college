@@ -14,8 +14,6 @@ final class ChapterController extends BaseCourseController
     {
         $course = $this->getCourseBySlug($courseSlug, ['id', 'slug', 'title']);
         $chapter = $this->getChapterByIdAndCourseId($chapterId, $course->id, ['id', 'title', 'subtitle', 'parent_id']);
-        return ChapterDetailPage::make()
-            ->setCourse($course)
-            ->setChapter($chapter);
+        return ChapterDetailPage::make($course, $chapter);
     }
 }

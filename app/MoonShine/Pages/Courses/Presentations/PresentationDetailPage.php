@@ -10,30 +10,23 @@ use App\Models\Presentation;
 use MoonShine\Pages\Page;
 use MoonShine\Components\MoonShineComponent;
 
+/**
+ * @method static static make(Course $course, Chapter $chapter, Presentation $presentation)
+ */
 class PresentationDetailPage extends Page
 {
     private Presentation $presentation;
     private Chapter $chapter;
     private Course $course;
 
-    public function setPresentation (Presentation $presentation): self
-    {
-        $this->presentation = $presentation;
-        return $this;
-    }
-
-    public function setChapter (Chapter $chapter): self
-    {
-        $this->chapter = $chapter;
-        return $this;
-    }
-
-    public function setCourse (Course $course): self
+    public function __construct(Course $course, Chapter $chapter, Presentation $presentation)
     {
         $this->course = $course;
-        return $this;
+        $this->chapter = $chapter;
+        $this->presentation = $presentation;
+        parent::__construct();
     }
-    
+
     /**
      * @return array<string, string>
      */

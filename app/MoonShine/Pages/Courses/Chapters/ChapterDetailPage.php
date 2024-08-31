@@ -14,21 +14,19 @@ use MoonShine\Decorations\Block;
 use MoonShine\Decorations\Column;
 use MoonShine\Decorations\Grid;
 
+/**
+ * @method static static make(Course $course, Chapter $chapter)
+ */
 class ChapterDetailPage extends Page
 {
     private Chapter $chapter;
     private Course $course;
 
-    public function setChapter(Chapter $chapter): self
-    {
-        $this->chapter = $chapter;
-        return $this;
-    }
-
-    public function setCourse(Course $course): self
+    public function __construct(Course $course, Chapter $chapter)
     {
         $this->course = $course;
-        return $this;
+        $this->chapter = $chapter;
+        parent::__construct();
     }
 
     public function breadcrumbs(): array
